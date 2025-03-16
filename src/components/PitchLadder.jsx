@@ -48,6 +48,27 @@ function PitchLadder({ bank, gearPosition }) {
     return degree < 0 ? `-${absValue}` : ` ${absValue}`;
   };
 
+  const getLineStyle = (degree) => {
+    const baseStyle = {
+      width: getLineWidth(degree),
+      height: '1px',
+    };
+
+    if (degree < 0) {
+      return {
+        ...baseStyle,
+        backgroundImage: 'linear-gradient(to right, rgb(34 197 94) 50%, transparent 50%)',
+        backgroundSize: '10px 1px',
+        backgroundRepeat: 'repeat-x',
+      };
+    }
+
+    return {
+      ...baseStyle,
+      backgroundColor: 'rgb(34 197 94)', // green-500 in RGB
+    };
+  };
+
   return (
     <div 
       className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full"
@@ -62,21 +83,18 @@ function PitchLadder({ bank, gearPosition }) {
 
       {/* Pitch Lines */}
       {pitchLines.map(degree => {
-        const width = getLineWidth(degree);
         return (
           <div 
             key={degree} 
             className="absolute left-1/2 top-1/2 -translate-x-1/2"
-            style={{ 
-              transform: `translateY(${-degree * 20}px)`,
-            }}
+            style={{ transform: `translateY(${-degree * 20}px)` }}
           >
             {degree !== 0 && (
               <div className="relative flex items-center justify-center">
                 {/* Main line */}
                 <div 
-                  className="h-[1px] bg-green-500 relative"
-                  style={{ width }}
+                  className="relative"
+                  style={getLineStyle(degree)}
                 >
                   {/* End ticks */}
                   {generateEndTicks(degree)}
