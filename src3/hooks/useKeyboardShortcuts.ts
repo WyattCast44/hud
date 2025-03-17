@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import hotkeys from "hotkeys-js";
-import { UAVState } from "./../App";
+import { BoardsPosition, UAVState } from "./../App";
 import { normalizeHeading } from "../utils/math";
 type SetUAVState = (callback: (prev: UAVState) => UAVState) => void;
 
@@ -119,7 +119,7 @@ export function useKeyboardShortcuts(setUavState: SetUAVState) {
     // ctrl+h
     hotkeys("ctrl+h", (event) => {
       event.preventDefault();
-      
+
       setUavState((prev) => ({
         ...prev,
         heading: normalizeHeading(360),
@@ -128,10 +128,28 @@ export function useKeyboardShortcuts(setUavState: SetUAVState) {
       }));
     });
 
+    hotkeys("b", () => {
+      setUavState((prev) => ({
+        ...prev,
+        boardsPosition: (() => {
+          switch (prev.boardsPosition) {
+            case BoardsPosition.IN:
+              return BoardsPosition.HALF;
+            case BoardsPosition.HALF:
+              return BoardsPosition.FULL;
+            case BoardsPosition.FULL:
+              return BoardsPosition.IN;
+            default:
+              return BoardsPosition.IN;
+          }
+        })(),
+      }));
+    });
+
     // Cleanup
     return () => {
       hotkeys.unbind(
-        "up,down,left,right,g,p,ctrl+up,ctrl+down,h+left,h+right,a+up,a+down,z+up,z+down"
+        "up,down,left,right,g,p,ctrl+up,ctrl+down,h+left,h+right,a+up,a+down,z+up,z+down,b"
       );
     };
   }, [setUavState]);

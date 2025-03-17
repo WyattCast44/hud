@@ -4,8 +4,8 @@ import ControlInput from "../inputs/ControlInput";
 import ControlGear from "../inputs/ControlGear";
 import ControlPowerMode from "../inputs/ControlPowerMode";
 import ControlDownloadHud from "../inputs/ControlDownloadHud";
+import ControlBoards from "../inputs/ControlBoards";
 
-// setup the props
 type ControlPanelProps = {
   uavState: UAVState;
   displayPreferences: DisplayPreferences;
@@ -169,6 +169,16 @@ export default function ControlPanel({
               onStateChange({
                 ...uavState,
                 gearPosition: uavState.gearPosition === "up" ? "down" : "up",
+              })
+            }
+          />
+
+          <ControlBoards
+            position={uavState.boardsPosition}
+            onToggle={(position) =>
+              onStateChange({
+                ...uavState,
+                boardsPosition: position,
               })
             }
           />

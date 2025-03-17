@@ -84,7 +84,7 @@ function bankPointer(bank: number) {
 }
 
 export default function BankIndicator({ bank }: { bank: number }) {
-  return (<div className="absolute left-1/2 bottom-[4%] -translate-x-1/2 text-green-500 print:text-black">
+  return (<div id="bank-indicator" className="absolute left-1/2 bottom-[4%] print:bottom-[6%] -translate-x-1/2 text-green-500 print:text-black">
     <svg width="400" height="150" viewBox="0 0 400 200" className="scale-100">
         {/* Tick marks */}
         {generateTicks(bank)}

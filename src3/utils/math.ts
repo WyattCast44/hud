@@ -19,4 +19,24 @@ function degreesToRadians(degrees: number) {
     return (degrees * Math.PI) / 180.0;
 }
 
-export { normalizeHeading, polarToCartesian, degreesToRadians };
+function keasToKtas(keas: number, altitude: number) {
+    // TODO: implement this
+    return keas;
+}
+
+function ktasToKeas(ktas: number, altitude: number) {
+    // TODO: implement this
+    return ktas;
+}
+
+function ktasToMach(ktas: number, altitude: number) {
+    // TODO: implement this
+    return ktas;
+}
+
+function machToKtas(mach: number, altitude: number) {
+    // TODO: implement this
+    return mach;
+}
+
+export { normalizeHeading, polarToCartesian, degreesToRadians, keasToKtas, ktasToKeas, ktasToMach, machToKtas };

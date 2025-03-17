@@ -14,7 +14,14 @@ type UAVState = {
   gearPosition: string;
   powerMode: string; 
   pla: number;
+  boardsPosition: BoardsPosition;
 };
+
+export enum BoardsPosition {
+  IN = "in",
+  HALF = "half",
+  FULL = "full",
+}
 
 type DisplayPreferences = {
   showHUD: boolean;
@@ -32,6 +39,7 @@ function App() {
     gearPosition: "up",
     powerMode: "speed",
     pla: 30,
+    boardsPosition: BoardsPosition.IN,
   } as UAVState);
 
   const [displayPreferences, setDisplayPreferences] = useState({
