@@ -3,6 +3,7 @@ import { UAVState, DisplayPreferences } from "../../App";
 import ControlInput from "../inputs/ControlInput";
 import ControlGear from "../inputs/ControlGear";
 import ControlPowerMode from "../inputs/ControlPowerMode";
+import ControlDownloadHud from "../inputs/ControlDownloadHud";
 
 // setup the props
 type ControlPanelProps = {
@@ -125,7 +126,7 @@ export default function ControlPanel({
   onStateChange,
 }: ControlPanelProps) {
   return (
-    <section className="flex w-full flex-col bg-black h-full overflow-y-auto">
+    <section className="flex w-full flex-col bg-black h-full overflow-y-auto print:hidden">
       <header className="h-10 flex items-center justify-between border-x border-t border-gray-400">
         <h1 className="font-mono uppercase tracking-tight font-black pl-4">
           Control Panel
@@ -133,7 +134,11 @@ export default function ControlPanel({
       </header>
 
       <main className="flex-1 border border-gray-400">
-        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 w-full h-auto divide-x divide-y divide-gray-400">
+        <div
+          className="
+        grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 w-full h-auto divide-x divide-y divide-gray-400
+        "
+        >
           {controls.map((control) => (
             <ControlInput
               key={control.name}
@@ -148,6 +153,16 @@ export default function ControlPanel({
             />
           ))}
 
+          <ControlPowerMode
+            mode={uavState.powerMode}
+            onToggle={() =>
+              onStateChange({
+                ...uavState,
+                powerMode: uavState.powerMode === "speed" ? "pla" : "speed",
+              })
+            }
+          />
+          
           <ControlGear
             position={uavState.gearPosition}
             onToggle={() =>
@@ -158,16 +173,7 @@ export default function ControlPanel({
             }
           />
 
-          <ControlPowerMode
-            mode={uavState.powerMode}
-            onToggle={() =>
-              onStateChange({
-                ...uavState,
-                powerMode: uavState.powerMode === "speed" ? "pla" : "speed",
-              })
-            }
-          />
-
+          <ControlDownloadHud />
         </div>
       </main>
 

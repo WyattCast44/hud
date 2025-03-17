@@ -11,7 +11,7 @@ export default function HSIDisplay(
     { uavState, displayPreferences }: HSIDisplayProps
 ) {
   return (
-    <div className="flex-1 border-gray-400 border w-full h-full">
+    <div className="flex-1 border-gray-400 border w-full print:hidden">
       <h1>
         HSI Display
       </h1>

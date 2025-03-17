@@ -68,6 +68,8 @@ function ControlPanel({ uavState, onStateChange }) {
               gearPosition: uavState.gearPosition === "up" ? "down" : "up"
             })}
           />
+
+          
         </div>
       </div>
 
