@@ -20,7 +20,7 @@ export default function ControlDownloadHud({ className = "" }) {
       <button
         onClick={handleDownload}
         type="button"
-        className="border-green-500 border text-xl text-center w-25 text-white font-semibold hover:bg-green-900 focus:bg-green-900 transition-colors bg-black focus:outline-none focus:ring focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-gray-800"
+        className="border-green-500 border uppercase text-xl text-center w-25 text-white font-semibold hover:bg-green-900 focus:bg-green-900 transition-colors bg-black focus:outline-none focus:ring focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-gray-800"
       >
         Save
       </button>

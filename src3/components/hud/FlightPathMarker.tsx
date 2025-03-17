@@ -1,11 +1,14 @@
 import React from "react";
+import { BoardsPosition } from "../../App";
 
 export default function FlightPathMarker({
   bank,
   pitch,
+  boardsPosition,
 }: {
   bank: number;
   pitch: number;
+  boardsPosition: BoardsPosition;
 }) {
   const style = {
     transform: `
@@ -55,6 +58,19 @@ export default function FlightPathMarker({
           stroke="currentColor" 
           strokeWidth="1"
         />
+
+        {/* Boards position */}
+        {boardsPosition != BoardsPosition.IN && (
+          <line
+            x1="5"
+            y1="15"
+            x2="5"
+            y2={boardsPosition === BoardsPosition.HALF ? "25" : "45"}
+            stroke="currentColor"
+            strokeWidth="1.5"
+          />
+        )}
+        
       </svg>
     </div>
   );

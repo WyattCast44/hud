@@ -51,7 +51,7 @@ export function useKeyboardShortcuts(setUavState: SetUAVState) {
       }));
     });
 
-    hotkeys("p", () => {
+    hotkeys("t", () => {
       setUavState((prev) => ({
         ...prev,
         powerMode: prev.powerMode === "speed" ? "pla" : "speed",
@@ -66,7 +66,7 @@ export function useKeyboardShortcuts(setUavState: SetUAVState) {
       }));
     });
 
-    hotkeys("p+down", () => {
+    hotkeys("ctrl+down", () => {
       setUavState((prev) => ({
         ...prev,
         pla: Math.max(prev.pla - 1, 0),
@@ -149,7 +149,7 @@ export function useKeyboardShortcuts(setUavState: SetUAVState) {
     // Cleanup
     return () => {
       hotkeys.unbind(
-        "up,down,left,right,g,p,ctrl+up,ctrl+down,h+left,h+right,a+up,a+down,z+up,z+down,b"
+        "up,down,left,right,g,t,ctrl+up,ctrl+down,h+left,h+right,a+up,a+down,z+up,z+down,b"
       );
     };
   }, [setUavState]);

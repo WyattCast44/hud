@@ -20,7 +20,7 @@ export default function ControlPanel(
       <section id="hud" className="absolute h-full aspect-5/3 border-x border-gray-400 bg-black print:bg-white">
         <HeadingIndicator heading={uavState.heading} />
         <PitchLadder bank={uavState.bank} gearPosition={uavState.gearPosition} pitch={uavState.pitch} />
-        <FlightPathMarker bank={uavState.bank} pitch={uavState.pitch} />
+        <FlightPathMarker bank={uavState.bank} pitch={uavState.pitch} boardsPosition={uavState.boardsPosition} />
         <BankIndicator bank={uavState.bank} />
         <AirspeedIndicator airspeed={uavState.airspeed} />
         <AltitudeIndicator altitude={uavState.altitude} />

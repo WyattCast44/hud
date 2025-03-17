@@ -1,4 +1,4 @@
-function FlightPathMarker({ bank, pitch }) {
+function FlightPathMarker({ bank, pitch}) {
   const style = {
     transform: `
       translate(-50%, -50%) 
