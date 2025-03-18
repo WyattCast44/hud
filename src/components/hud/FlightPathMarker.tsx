@@ -60,7 +60,7 @@ export default function FlightPathMarker({
         />
 
         {/* Boards position */}
-        {boardsPosition != BoardsPosition.IN && (
+        {boardsPosition != BoardsPosition.IN && boardsPosition != BoardsPosition.LOCKED && (
           <line
             x1="5"
             y1="15"
