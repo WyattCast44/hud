@@ -28,6 +28,7 @@ type DisplayPreferences = {
   showHUD: boolean;
   showMap: boolean;
   theme: string;
+  northUp: boolean
 };
 
 function App() {
@@ -47,6 +48,7 @@ function App() {
     showHUD: true,
     showMap: true,
     theme: "dark",
+    northUp: false,
   } as DisplayPreferences);
 
   useKeyboardShortcuts(setUavState);
