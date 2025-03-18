@@ -7,7 +7,8 @@ import BankIndicator from '../hud/BankIndicator';
 import AirspeedIndicator from '../hud/AirspeedIndicator';
 import AltitudeIndicator from '../hud/AltitudeIndicator';
 import PLAIndicator from '../hud/PLAIndicator';
-type HUDDisplayProps = {
+import GearDownAirspeedIndicator from '../hud/GearDownAirspeedIndicator';
+  type HUDDisplayProps = {
     uavState: UAVState;
     displayPreferences: DisplayPreferences;
 }
@@ -22,7 +23,11 @@ export default function ControlPanel(
         <PitchLadder bank={uavState.bank} gearPosition={uavState.gearPosition} pitch={uavState.pitch} />
         <FlightPathMarker bank={uavState.bank} pitch={uavState.pitch} boardsPosition={uavState.boardsPosition} />
         <BankIndicator bank={uavState.bank} />
-        <AirspeedIndicator airspeed={uavState.airspeed} />
+        {uavState.gearPosition === "down" ? (
+          <GearDownAirspeedIndicator airspeed={uavState.airspeed} />
+        ) : (
+          <AirspeedIndicator airspeed={uavState.airspeed} />
+        )}
         <AltitudeIndicator altitude={uavState.altitude} />
         <PLAIndicator pla={uavState.pla} powerMode={uavState.powerMode} />
       </section>
