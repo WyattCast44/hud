@@ -1,4 +1,4 @@
-import "./app.css";
+import "./App.css";
 import React from "react";
 import App from "./App.js";
 import { StrictMode } from "react";
