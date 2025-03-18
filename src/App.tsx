@@ -1,8 +1,9 @@
-import React from 'react';
+import React from "react";
 import { useState } from "react";
 import ControlPanel from "./components/layout/ControlPanel";
 import HUDDisplay from "./components/layout/HUDDisplay";
 import HSIDisplay from "./components/layout/HSIDisplay";
+import VSIDisplay from "./components/layout/VSIDisplay";
 import { useKeyboardShortcuts } from "./hooks/useKeyboardShortcuts";
 
 type UAVState = {
@@ -12,7 +13,7 @@ type UAVState = {
   bank: number;
   heading: number;
   gearPosition: string;
-  powerMode: string; 
+  powerMode: string;
   pla: number;
   boardsPosition: BoardsPosition;
 };
@@ -28,7 +29,7 @@ type DisplayPreferences = {
   showHUD: boolean;
   showMap: boolean;
   theme: string;
-  northUp: boolean
+  northUp: boolean;
 };
 
 function App() {
@@ -57,11 +58,27 @@ function App() {
     <div className="h-screen w-screen overflow-hidden">
       <div className="flex h-full p-2 space-x-2">
         <div className="w-1/3 print:hidden">
-          <ControlPanel uavState={uavState} displayPreferences={displayPreferences} onStateChange={setUavState} />
+          <ControlPanel
+            uavState={uavState}
+            displayPreferences={displayPreferences}
+            onStateChange={setUavState}
+          />
         </div>
         <div className="w-2/3 print:w-full flex flex-col items-center justify-center space-y-2">
-          <HUDDisplay uavState={uavState} displayPreferences={displayPreferences} />
-          <HSIDisplay uavState={uavState} displayPreferences={displayPreferences} />
+          <HUDDisplay
+            uavState={uavState}
+            displayPreferences={displayPreferences}
+          />
+          <div className="flex items-center justify-center w-full space-x-2 flex-1">
+            <HSIDisplay
+              uavState={uavState}
+              displayPreferences={displayPreferences}
+            />
+            <VSIDisplay
+              uavState={uavState}
+              displayPreferences={displayPreferences}
+            />
+          </div>
         </div>
       </div>
     </div>

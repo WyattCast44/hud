@@ -1,10 +1,8 @@
 import React from 'react';
 
 export default function CompassRose({
-    northUp = false,
-    heading = 0,
+    heading,
 }: {
-    northUp: boolean;
     heading: number;
 }) {
     const cardinalPoints = [
@@ -25,7 +23,7 @@ export default function CompassRose({
             <circle
                 r="200"
                 fill="none"
-                stroke="#404040"
+                stroke="currentColor"
                 strokeWidth="2"
             />
 
@@ -47,7 +45,7 @@ export default function CompassRose({
                         y1={y1}
                         x2={x2}
                         y2={y2}
-                        stroke="#404040"
+                        stroke="currentColor"
                         strokeWidth={strokeWidth}
                     />
                 );
@@ -66,7 +64,7 @@ export default function CompassRose({
                         y={y}
                         textAnchor="middle"
                         dominantBaseline="middle"
-                        fill="#404040"
+                        fill="currentColor"
                         fontSize="24"
                     >
                         {label}

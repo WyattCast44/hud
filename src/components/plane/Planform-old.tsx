@@ -1,10 +1,8 @@
 import React from 'react';
 
-
-// This component will the top down view of the plane, i.e the planform view
-export default function Plane() {
+export default function PlanformOld() {
     return (
-        <div className="plane-container">
+        <div className="planform-container">
             <svg
                 viewBox="0 0 1000 600"
                 preserveAspectRatio="xMidYMid meet"
