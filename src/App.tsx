@@ -69,7 +69,7 @@ function App() {
             uavState={uavState}
             displayPreferences={displayPreferences}
           />
-          <div className="flex items-center justify-center w-full space-x-2 flex-1">
+          <div className="flex w-full space-x-2 flex-1 max-h-1/2">
             <HSIDisplay
               uavState={uavState}
               displayPreferences={displayPreferences}
