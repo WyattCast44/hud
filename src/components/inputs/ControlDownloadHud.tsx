@@ -1,21 +1,23 @@
 import React from "react";
-import { downloadHudImage } from "../../utils/download";
 
-export default function ControlDownloadHud({ className = "" }) {
+export default function ControlDownloadHud({ shortcut, className = "" }: { shortcut?: string, className?: string }) {
   const handleDownload = () => {
-    const hud = document.getElementById("hud");
-    if (hud) {
-      downloadHudImage(hud, "HUD.png");
-    }
+    window.print();
   };
 
   return (
     <div
-      className={`flex flex-col items-center justify-center aspect-square text-white space-y-2 font-mono last:border-b last:border-gray-400 lg:last:border-r ${className}`}
+      className={`flex flex-col items-center justify-center aspect-square text-white space-y-2 font-mono last:border-b last:border-gray-400 lg:last:border-r relative ${className}`}
     >
       <label htmlFor="gear" className="uppercase">
         Download
       </label>
+
+      {shortcut && (
+        <div className="absolute bottom-1 left-1/2 -translate-x-1/2 font-mono text-xs text-gray-400">
+          ({shortcut})
+        </div>
+      )}
 
       <button
         onClick={handleDownload}

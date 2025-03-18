@@ -14,6 +14,7 @@ type ControlInputProps = {
   type: "number" | "select" | "toggle";
   options?: string[];
   className?: string;
+  shortcut?: string;
 };
 
 export type { ControlInputProps };
@@ -32,6 +33,7 @@ export default function ControlInput({
   type,
   options,
   className,
+  shortcut,
 }: ControlInputProps) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let newValue = e.target.value;
@@ -57,17 +59,23 @@ export default function ControlInput({
     }
   };
 
-  if(value === undefined) {
+  if (value === undefined) {
     value = defaultValue;
   }
 
   return (
     <div
-      className={`flex flex-col items-center justify-center aspect-square text-white space-y-2 font-mono overflow-hidden last:border-b last:border-gray-400 lg:last:border-r ${className}`}
+      className={`flex flex-col items-center justify-center aspect-square text-white space-y-2 font-mono overflow-hidden last:border-b last:border-gray-400 lg:last:border-r relative ${className}`}
     >
       <label htmlFor={name} className="uppercase">
         {label}
       </label>
+
+      {shortcut && (
+        <div className="absolute bottom-1 left-1/2 -translate-x-1/2 font-mono text-xs text-gray-400">
+          ({shortcut})
+        </div>
+      )}
 
       <input
         type={inputType(type)}

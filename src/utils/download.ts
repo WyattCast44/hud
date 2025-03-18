@@ -1,5 +1,11 @@
 import html2canvas from 'html2canvas-pro';
 
+/**
+ * Download the HUD image. 
+ * @todo: Disabled for now. The print feature is more reliable.
+ * @param element - The element to download
+ * @param filename - The filename to save the image as
+ */
 export async function downloadHudImage(element: HTMLElement, filename: string) {
 
   // clone the element

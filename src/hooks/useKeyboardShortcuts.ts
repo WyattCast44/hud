@@ -138,6 +138,8 @@ export function useKeyboardShortcuts(setUavState: SetUAVState) {
             case BoardsPosition.HALF:
               return BoardsPosition.FULL;
             case BoardsPosition.FULL:
+              return BoardsPosition.LOCKED;
+            case BoardsPosition.LOCKED:
               return BoardsPosition.IN;
             default:
               return BoardsPosition.IN;

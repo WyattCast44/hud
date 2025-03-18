@@ -23,6 +23,7 @@ type Control = {
   validate: (value: number | string) => number | string;
   type: "number" | "select" | "toggle";
   options?: string[];
+  shortcut?: string;
 };
 
 const controls: Control[] = [
@@ -40,6 +41,7 @@ const controls: Control[] = [
       return Math.min(Math.max(num, 0), 100_000);
     },
     type: "number",
+    shortcut: "z+up/down",
   },
   {
     name: "airspeed",
@@ -55,6 +57,7 @@ const controls: Control[] = [
       return Math.min(Math.max(num, 0), 500);
     },
     type: "number",
+    shortcut: "a+up/down",
   },
   {
     name: "heading",
@@ -70,6 +73,7 @@ const controls: Control[] = [
       return Math.min(Math.max(num, 1), 360);
     },
     type: "number",
+    shortcut: "h+left/right",
   },
   {
     name: "pitch",
@@ -85,6 +89,7 @@ const controls: Control[] = [
       return Math.min(Math.max(num, -45), 45);
     },
     type: "number",
+    shortcut: "up/down",
   },
   {
     name: "bank",
@@ -100,6 +105,7 @@ const controls: Control[] = [
       return Math.min(Math.max(num, -45), 45);
     },
     type: "number",
+    shortcut: "left/right",
   },
   {
     name: "pla",
@@ -115,6 +121,7 @@ const controls: Control[] = [
 
       return Math.min(Math.max(num, 0), 100);
     },
+    shortcut: "ctrl+up/down",
   },
 ];
 
@@ -155,6 +162,7 @@ export default function ControlPanel({
 
           <ControlPowerMode
             mode={uavState.powerMode}
+            shortcut="t"
             onToggle={() =>
               onStateChange({
                 ...uavState,
@@ -165,6 +173,7 @@ export default function ControlPanel({
           
           <ControlGear
             position={uavState.gearPosition}
+            shortcut="g"
             onToggle={() =>
               onStateChange({
                 ...uavState,
@@ -175,6 +184,7 @@ export default function ControlPanel({
 
           <ControlBoards
             position={uavState.boardsPosition}
+            shortcut="b"
             onToggle={(position) =>
               onStateChange({
                 ...uavState,
@@ -183,7 +193,7 @@ export default function ControlPanel({
             }
           />
 
-          <ControlDownloadHud />
+          <ControlDownloadHud shortcut="ctrl+p" />
         </div>
       </main>
 
