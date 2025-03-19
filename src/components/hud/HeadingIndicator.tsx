@@ -4,7 +4,7 @@ import { normalizeHeading } from "../../utils/math";
 const INDICATOR_WIDTH = 300;
 const INDICATOR_HEIGHT = 50;
 const TICK_SPACING = INDICATOR_WIDTH / 60; // 60 ticks for 360 degrees
-const TICK_HEIGHT = -5;
+const TICK_HEIGHT = -4;
 const TICK_HEIGHT_MAJOR = -8;
 
 function generateTicks(heading: number) {
@@ -20,17 +20,16 @@ function generateTicks(heading: number) {
     // normalize the tick heading, ensuring it's within 1-360
     tickHeading = normalizeHeading(tickHeading);
 
-    if (offset === 0) continue; // skip the current heading
-
     // calculate the x position of the tick
     const x = offset * TICK_SPACING;
 
     // determine the height of the tick based on the heading
     const tickHeight = tickHeading % 10 === 0 ? TICK_HEIGHT_MAJOR : TICK_HEIGHT;
 
-    let tick = (
-      <g key={offset}>
-        {/* Tick mark */}
+    const elements: React.ReactNode[] = [];
+
+    if (tickHeading % 5 === 0 || tickHeading % 10 === 0) {
+      elements.push(
         <line
           x1={x}
           y1={0}
@@ -38,28 +37,29 @@ function generateTicks(heading: number) {
           y2={tickHeight}
           stroke="currentColor"
           strokeWidth="1"
+          id={`heading-indicator-tick-${offset}`}
         />
+      );
+    }
 
-        {/* Label for multiples of 10 */}
-        {/* dont add labels for the current heading */}
-        {/* dont add labels in the value is with 5 degrees of the center heading */}
-        {tickHeading % 10 === 0 && offset !== 0 && Math.abs(offset) > 5 && (
-          <text
-            x={x}
-            y={-10}
-            textAnchor="middle"
-            fill="currentColor"
-            fontSize="10"
-            className="font-mono"
-          >
-            {tickHeading}
-          </text>
-        )}
-      </g>
-    );
+    if (tickHeading % 10 === 0 && offset !== 0 && Math.abs(offset) > 2) {
+      elements.push(
+        <text
+          x={x}
+          y={-10}
+          textAnchor="middle"
+          fill="currentColor"
+          fontSize="10"
+          className="font-mono"
+        >
+          {tickHeading.toString().slice(0, 2)}
+        </text>
+      );
+    }
 
-    // add the tick to the list
-    ticks.push(tick);
+    if (elements.length > 0) {
+      ticks.push(<g key={`heading-indicator-tick-${offset}`}>{elements}</g>);
+    }
   }
 
   return ticks;
@@ -71,13 +71,13 @@ export default function HeadingIndicator({ heading }: { heading: number }) {
       <svg
         width={INDICATOR_WIDTH}
         height={INDICATOR_HEIGHT}
-        viewBox="-120 -20 240 40"
+        viewBox="-120 -30 240 50"
       >
         <rect
           x={-120}
-          y={-20}
+          y={-30}
           width={INDICATOR_WIDTH}
-          height={INDICATOR_HEIGHT+20}
+          height={INDICATOR_HEIGHT + 30}
           fill="black"
           fillOpacity={100}
           id="heading-indicator-background"
@@ -87,24 +87,25 @@ export default function HeadingIndicator({ heading }: { heading: number }) {
         {/* Tick marks and labels */}
         {generateTicks(heading)}
 
-        {/* Current heading */}
+        {/* Background rectangle for heading */}
+        <rect
+          x={-25}
+          y={-23}
+          width={50}
+          height={16}
+          stroke="currentColor"
+          strokeWidth={1}
+        />
         <text
           x={0}
-          y={-10}
+          y={-11}
           textAnchor="middle"
           fill="currentColor"
           fontSize="14"
           className="font-mono"
         >
-          {Math.round(normalizeHeading(heading))}
+          {normalizeHeading(heading).toString().padStart(3, "0")}
         </text>
-
-        {/* Center marker */}
-        <path
-          d="M 0,-1 L -5,3 L 5,3 Z"
-          fill="currentColor"
-          className="rotate-180"
-        />
       </svg>
     </div>
   );

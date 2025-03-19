@@ -7,3 +7,7 @@
 -- Chrome is recommended
 
 ![Demo of the tool](./.art/demo.png)
+
+# Resources
+
+- https://yqnn.github.io/svg-path-editor/
