@@ -32,7 +32,11 @@ function getLineStyle(degree: number, isLeft: boolean) {
   const baseStyle = {
     width: getPitchLineWidth(degree),
     height: "0.5px",
-    transform: `translateX(${isLeft ? -PITCH_LINE_CENTER_GAP_WIDTH/2 : PITCH_LINE_CENTER_GAP_WIDTH/2}px)`,
+    transform: `
+      translateX(${isLeft ? -PITCH_LINE_CENTER_GAP_WIDTH/2 : PITCH_LINE_CENTER_GAP_WIDTH/2}px)
+      rotate(${isLeft ? degree : -degree}deg)
+    `,
+    transformOrigin: isLeft ? "right center" : "left center",
   };
 
   if (degree < 0) {
