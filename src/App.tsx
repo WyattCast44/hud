@@ -4,6 +4,7 @@ import ControlPanel from "./components/layout/ControlPanel";
 import HUDDisplay from "./components/layout/HUDDisplay";
 import HSIDisplay from "./components/layout/HSIDisplay";
 import VSIDisplay from "./components/layout/VSIDisplay";
+import MapDisplay from "./components/layout/MapDisplay";
 import { useKeyboardShortcuts } from "./hooks/useKeyboardShortcuts";
 
 type UAVState = {
@@ -74,10 +75,16 @@ function App() {
               uavState={uavState}
               displayPreferences={displayPreferences}
             />
-            <VSIDisplay
-              uavState={uavState}
-              displayPreferences={displayPreferences}
-            />
+            <div className="flex flex-col space-y-2 w-full">
+              <VSIDisplay
+                uavState={uavState}
+                displayPreferences={displayPreferences}
+              />
+              <MapDisplay
+                uavState={uavState}
+                displayPreferences={displayPreferences}
+              />
+            </div>
           </div>
         </div>
       </div>

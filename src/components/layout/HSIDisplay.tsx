@@ -11,9 +11,9 @@ type HSIDisplayProps = {
 
 export default function HSIDisplay({ uavState, displayPreferences }: HSIDisplayProps) {
     return (
-        <div className="h-full print:hidden flex items-center justify-center relative">
+        <div className="h-full print:hidden flex items-center justify-center relative flex-1 w-full">
             {/* Container for both plane and compass rose */}
-            <div className="relative h-full aspect-square bg-black border-gray-400 border">
+            <div className="relative h-full bg-black border-gray-400 border w-full aspect-square">
 
                 {/* Compass Rose Layer */}
                 <div 
