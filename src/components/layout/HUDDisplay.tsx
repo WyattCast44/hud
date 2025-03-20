@@ -8,7 +8,6 @@ import AirspeedIndicator from '../hud/AirspeedIndicator';
 import AltitudeIndicator from '../hud/AltitudeIndicator';
 import PLAIndicator from '../hud/PLAIndicator';
 import GearDownAirspeedIndicator from '../hud/GearDownAirspeedIndicator';
-import CommandedGammaIndicator from '../hud/CommandedGammaIndicator';
 
 type HUDDisplayProps = {
     uavState: UAVState;
@@ -23,7 +22,6 @@ export default function ControlPanel(
       <section id="hud" className="absolute h-full aspect-5/3 border-x border-gray-400 bg-black print:bg-white">
         <HeadingIndicator heading={uavState.heading} />
         <PitchLadder bank={uavState.bank} gearPosition={uavState.gearPosition} pitch={uavState.pitch} />
-        <CommandedGammaIndicator pitch={uavState.pitch} />
         <FlightPathMarker bank={uavState.bank} pitch={uavState.pitch} boardsPosition={uavState.boardsPosition} />
         <BankIndicator bank={uavState.bank} />
         {uavState.gearPosition === "down" ? (

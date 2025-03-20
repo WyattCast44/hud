@@ -78,10 +78,9 @@ export default function HeadingIndicator({ heading }: { heading: number }) {
           y={-30}
           width={INDICATOR_WIDTH}
           height={INDICATOR_HEIGHT + 30}
-          fill="black"
           fillOpacity={100}
           id="heading-indicator-background"
-          className="print:fill-white"
+          className="print:fill-white fill-black"
         />
 
         {/* Tick marks and labels */}
@@ -94,6 +93,7 @@ export default function HeadingIndicator({ heading }: { heading: number }) {
           width={50}
           height={16}
           stroke="currentColor"
+          className="fill-black print:fill-white"
           strokeWidth={1}
         />
         <text

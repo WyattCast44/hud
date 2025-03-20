@@ -1,4 +1,5 @@
 import React from "react";
+import CommandedPitchIndicator from "./CommandedPitchIndicator";
 
 const STANDARD_PITCH_LINE_WIDTH = 250;
 const GEAR_DOWN_PITCH_LINE_WIDTH = 150;
@@ -25,7 +26,7 @@ function getPitchLineWidth(degree: number) {
     totalWidth = STANDARD_PITCH_LINE_WIDTH;
   }
   // Return half width since we're splitting the line in two
-  return `${(totalWidth / 2) - (PITCH_LINE_CENTER_GAP_WIDTH / 2)}px`;
+  return `${totalWidth / 2 - PITCH_LINE_CENTER_GAP_WIDTH / 2}px`;
 }
 
 function getLineStyle(degree: number, isLeft: boolean) {
@@ -33,7 +34,11 @@ function getLineStyle(degree: number, isLeft: boolean) {
     width: getPitchLineWidth(degree),
     height: "0.5px",
     transform: `
-      translateX(${isLeft ? -PITCH_LINE_CENTER_GAP_WIDTH/2 : PITCH_LINE_CENTER_GAP_WIDTH/2}px)
+      translateX(${
+        isLeft
+          ? -PITCH_LINE_CENTER_GAP_WIDTH / 2
+          : PITCH_LINE_CENTER_GAP_WIDTH / 2
+      }px)
       rotate(${isLeft ? degree : -degree}deg)
     `,
     transformOrigin: isLeft ? "right center" : "left center",
@@ -68,32 +73,44 @@ export default function PitchLadder({
     gearPosition === "down" ? GEAR_DOWN_PITCH_LINES : STANDARD_PITCH_LINES;
 
   return (
-    <div
-      className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full"
-      style={{
-        transform: `rotate(${bank}deg)`,
-      }}
-    >
-      {/* Pitch Lines */}
-      {pitchLines.map((degree) => (
-        <div
-          key={degree}
-          id={`pitch-line-${degree}`}
-          className="absolute left-1/2 top-1/2 -translate-x-1/2 flex items-center justify-center"
-          style={{ transform: `translateY(${-degree * 20}px)` }}
-        >
-          {/* Left half of the line */}
-          <div 
-            className={`relative ${degree > 0 ? "print-bg-black" : "print-bg-black-dotted"}`} 
-            style={getLineStyle(degree, true)}
-          />
-          {/* Right half of the line */}
-          <div 
-            className={`relative ${degree > 0 ? "print-bg-black" : "print-bg-black-dotted"}`} 
-            style={getLineStyle(degree, false)}
-          />
-        </div>
-      ))}
+    <div className="relative w-full h-full">
+      <div
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full"
+        style={{
+          transform: `rotate(${bank}deg)`,
+        }}
+      >
+        {/* Pitch Lines */}
+        {pitchLines.map((degree) => (
+          <div
+            key={degree}
+            id={`pitch-line-${degree}`}
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 flex items-center justify-center"
+            style={{ transform: `translateY(${-degree * 20}px)` }}
+          >
+            {/* Left half of the line */}
+            <div
+              className={`relative ${
+                degree > 0 ? "print-bg-black" : "print-bg-black-dotted"
+              }`}
+              style={getLineStyle(degree, true)}
+            />
+            {/* Right half of the line */}
+            <div
+              className={`relative ${
+                degree > 0 ? "print-bg-black" : "print-bg-black-dotted"
+              }`}
+              style={getLineStyle(degree, false)}
+            />
+          </div>
+        ))}
+        {/* Commanded Pitch Indicator */}
+        <CommandedPitchIndicator
+          pitch={pitch}
+          bank={bank}
+          width={STANDARD_PITCH_LINE_WIDTH}
+        />
+      </div>
     </div>
   );
 }

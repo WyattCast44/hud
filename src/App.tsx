@@ -57,14 +57,14 @@ function App() {
   return (
     <div className="h-screen w-screen overflow-hidden">
       <div className="flex h-full p-2 space-x-2">
-        <div className="w-1/3 print:hidden">
+        <div className="w-2/6 print:hidden">
           <ControlPanel
             uavState={uavState}
             displayPreferences={displayPreferences}
             onStateChange={setUavState}
           />
         </div>
-        <div className="w-2/3 print:w-full flex flex-col items-center justify-center space-y-2">
+        <div className="w-4/6 print:w-full flex flex-col items-center justify-center space-y-2">
           <HUDDisplay
             uavState={uavState}
             displayPreferences={displayPreferences}
