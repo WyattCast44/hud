@@ -4,7 +4,7 @@ const STANDARD_PITCH_LINE_WIDTH = 250;
 const GEAR_DOWN_PITCH_LINE_WIDTH = 150;
 const ZERO_PITCH_LINE_WIDTH = 325;
 // we are leaving a gap in the center of all pitch lines for the flight path marker
-const PITCH_LINE_CENTER_GAP_WIDTH = 100;
+const PITCH_LINE_CENTER_GAP_WIDTH = 75;
 
 const STANDARD_PITCH_LINES = [
   -45, -35, -30, -25, -20, -15, -10, -5, 0, 5, 10, 15, 20, 25, 30, 35, 45,

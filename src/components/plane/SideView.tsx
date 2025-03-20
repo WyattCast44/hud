@@ -2,8 +2,6 @@ import React from "react";
 
 export default function SideView() {
   return (
-    // mirror the svg horizontally
-
     <svg
       className="transform scale-x-[-1]"
       xmlns="http://www.w3.org/2000/svg"

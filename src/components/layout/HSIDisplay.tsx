@@ -2,7 +2,7 @@ import React from 'react';
 import { UAVState, DisplayPreferences } from '../../App';
 import Planform from '../plane/Planform';
 import CompassRose from '../hsi/CompassRose';
-
+import RearView from '../plane/RearView';
 // setup the props
 type HSIDisplayProps = {
     uavState: UAVState;
@@ -14,6 +14,7 @@ export default function HSIDisplay({ uavState, displayPreferences }: HSIDisplayP
         <div className="h-full print:hidden flex items-center justify-center relative">
             {/* Container for both plane and compass rose */}
             <div className="relative h-full aspect-square bg-black border-gray-400 border">
+
                 {/* Compass Rose Layer */}
                 <div 
                     className="absolute inset-0 text-green-500 print:text-black"
