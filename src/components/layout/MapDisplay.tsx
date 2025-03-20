@@ -21,7 +21,7 @@ export default function MapDisplay({
       container: "map-display", 
       style: "https://demotiles.maplibre.org/style.json", // style URL
       center: [-115.6719, 36.5892], // Center of KINS
-      zoom: 12, // starting zoom
+      zoom: 3, // starting zoom
     });
     
     return () => {
@@ -31,6 +31,9 @@ export default function MapDisplay({
 
   return (
     <div
+      style={{ 
+        filter: 'brightness(0.9)',
+      }}
       id="map-display"
       className="border-gray-400 border w-full print:hidden bg-neutral-900 flex items-center justify-center flex-1"
     >
