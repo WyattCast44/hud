@@ -1,32 +1,30 @@
 import React from "react";
-import { UAVState, DisplayPreferences } from "../../App";
+import { UAVState } from "../../App";
 import ControlInput from "../inputs/ControlInput";
 import ControlGear from "../inputs/ControlGear";
 import ControlPowerMode from "../inputs/ControlPowerMode";
 import ControlDownloadHud from "../inputs/ControlDownloadHud";
+import PowerMode from "../../types/PowerMode";
 import ControlBoards from "../inputs/ControlBoards";
+import GearPosition from "../../types/GearPosition";
+import ControlSimulation from "../inputs/ControlSimulation";
+import InputControl from "../../types/InputControl";
 
-type ControlPanelProps = {
+interface SimulationControls {
+  isRunning: boolean;
+  start: () => void;
+  stop: () => void;
+  pause: () => void;
+  reset: () => void;
+}
+
+type VehicleStateControlPanelProps = {
   uavState: UAVState;
-  displayPreferences: DisplayPreferences;
   onStateChange: (state: UAVState) => void;
+  simulationControls: SimulationControls;
 };
 
-type Control = {
-  name: string;
-  label: string;
-  unit: string;
-  defaultValue: number;
-  min: number;
-  max: number;
-  step: number;
-  validate: (value: number | string) => number | string;
-  type: "number" | "select" | "toggle";
-  options?: string[];
-  shortcut?: string;
-};
-
-const controls: Control[] = [
+const controls: InputControl[] = [
   {
     name: "altitude",
     label: "Alt",
@@ -129,19 +127,10 @@ export { controls };
 
 export default function VehicleStateControlPanel({
   uavState,
-  displayPreferences,
   onStateChange,
-}: ControlPanelProps) {
+}: VehicleStateControlPanelProps) {
   return (
-    <section className="flex w-full flex-col bg-black h-full overflow-y-auto print:hidden">
-      <header className="h-10 flex items-center justify-between border-x border-t border-gray-400">
-        <h1 className="font-mono uppercase tracking-tight font-black pl-4">
-          Control Panel
-        </h1>
-      </header>
-
-      <main className="flex-1 border border-gray-400">
-        <div
+    <div
           className="
         grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 w-full h-auto divide-x divide-y divide-gray-400
         "
@@ -166,7 +155,7 @@ export default function VehicleStateControlPanel({
             onToggle={() =>
               onStateChange({
                 ...uavState,
-                powerMode: uavState.powerMode === "speed" ? "pla" : "speed",
+                powerMode: uavState.powerMode === PowerMode.SPEED ? PowerMode.PLA : PowerMode.SPEED,
               })
             }
           />
@@ -177,7 +166,7 @@ export default function VehicleStateControlPanel({
             onToggle={() =>
               onStateChange({
                 ...uavState,
-                gearPosition: uavState.gearPosition === "up" ? "down" : "up",
+                gearPosition: uavState.gearPosition === GearPosition.UP ? GearPosition.DOWN : GearPosition.UP,
               })
             }
           />
@@ -194,14 +183,10 @@ export default function VehicleStateControlPanel({
           />
 
           <ControlDownloadHud shortcut="ctrl+p" />
+          <ControlSimulation shortcut="ctrl+s" />
         </div>
-      </main>
 
-      <footer className="w-full border-x border-b border-gray-400 h-10 flex items-center px-4 text-gray-400 font-mono text-sm">
-        <p>Version 0.0.1</p>
-      </footer>
-    </section>
   );
 }
 
-export type { ControlPanelProps };
+export type { VehicleStateControlPanelProps };

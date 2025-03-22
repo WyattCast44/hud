@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { createPortal } from "react-dom";
-import { UAVState, DisplayPreferences } from "../../App";
+import { UAVState } from "../../App";
 import Map from "ol/Map.js";
 
 import "ol/ol.css";
@@ -15,12 +14,10 @@ import Overlay from "ol/Overlay.js";
 // setup the props
 type MapDisplayProps = {
   uavState: UAVState;
-  displayPreferences: DisplayPreferences;
 };
 
 export default function MapDisplay({
   uavState,
-  displayPreferences,
 }: MapDisplayProps) {
   let map: Map;
   const mapRef = useRef<HTMLDivElement>(null);

@@ -32,6 +32,7 @@ type UAVState = {
   commandedBoardsPosition: BoardsPosition | null;
 
   // power mode
+  pla: number;
   powerMode: PowerMode;
   commandedSpeed: number | null;
   commandedPLA: number | null;

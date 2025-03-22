@@ -1,23 +1,5 @@
 import React, { useEffect } from "react";
-
-type ControlInputProps = {
-  name: string;
-  label: string;
-  unit: string;
-  value: number;
-  defaultValue: number;
-  onChange: (value: number | string) => void;
-  min?: number;
-  max?: number;
-  step?: number;
-  validate: CallableFunction;
-  type: "number" | "select" | "toggle";
-  options?: string[];
-  className?: string;
-  shortcut?: string;
-};
-
-export type { ControlInputProps };
+import InputControl from "../../types/InputControl";
 
 export default function ControlInput({
   name,
@@ -34,15 +16,15 @@ export default function ControlInput({
   options,
   className,
   shortcut,
-}: ControlInputProps) {
+}: InputControl) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let newValue = e.target.value;
 
     if (validate) {
-      newValue = validate(newValue);
+      newValue = String(validate(newValue));
     }
 
-    onChange(newValue);
+    onChange?.(newValue);
   };
 
   const inputType = function (type: string) {

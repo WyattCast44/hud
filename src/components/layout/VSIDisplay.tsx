@@ -1,16 +1,15 @@
 import React from 'react';
-import { UAVState, DisplayPreferences } from '../../App';
+import { UAVState } from '../../App';
 import SideView from '../plane/SideView';
 
 // setup the props
 type VSIDisplayProps = {
     uavState: UAVState;
-    displayPreferences: DisplayPreferences;
 }
 
-export default function VSIDisplay({ uavState, displayPreferences }: VSIDisplayProps) {
+export default function VSIDisplay({ uavState }: VSIDisplayProps) {
     // Convert gamma (flight path angle) to rotation transform
-    const rotation = -uavState.pitch || 0;
+    const rotation = -uavState.gamma || 0;
     
     return (
         <div className="border-gray-400 border w-full print:hidden bg-neutral-900">

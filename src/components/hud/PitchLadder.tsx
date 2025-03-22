@@ -63,11 +63,11 @@ function getLineStyle(degree: number, isLeft: boolean) {
 export default function PitchLadder({
   bank,
   gearPosition,
-  pitch,
+  gamma,
 }: {
   bank: number;
   gearPosition: string;
-  pitch: number;
+  gamma: number;
 }) {
   const pitchLines =
     gearPosition === "down" ? GEAR_DOWN_PITCH_LINES : STANDARD_PITCH_LINES;
@@ -106,7 +106,7 @@ export default function PitchLadder({
         ))}
         {/* Commanded Pitch Indicator */}
         <CommandedPitchIndicator
-          pitch={pitch}
+          gamma={gamma}
           bank={bank}
           width={STANDARD_PITCH_LINE_WIDTH}
         />
