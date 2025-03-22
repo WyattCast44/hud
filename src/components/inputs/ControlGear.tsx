@@ -14,7 +14,7 @@ export default function ControlGear({
 
   return (
     <div
-      className={`flex flex-col items-center justify-center aspect-square text-white space-y-2 font-mono last:border-b last:border-gray-400 lg:last:border-r relative ${className}`}
+      className={`px-4 py-2.5 flex flex-col items-center justify-center aspect-square text-white space-y-1 font-mono last:border-b last:border-gray-400 lg:last:border-r relative ${className}`}
     >
       <label htmlFor="gear" className="uppercase">
         Gear

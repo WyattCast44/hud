@@ -31,6 +31,7 @@ function generateTicks(heading: number) {
     if (tickHeading % 5 === 0 || tickHeading % 10 === 0) {
       elements.push(
         <line
+          key={`heading-indicator-tick-${offset}`}
           x1={x}
           y1={0}
           x2={x}
@@ -45,6 +46,7 @@ function generateTicks(heading: number) {
     if (tickHeading % 10 === 0 && offset !== 0 && Math.abs(offset) > 2) {
       elements.push(
         <text
+          key={`heading-indicator-tick-label-${offset}`}
           x={x}
           y={-10}
           textAnchor="middle"

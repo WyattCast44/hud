@@ -13,7 +13,7 @@ export default function VSIDisplay({ uavState, displayPreferences }: VSIDisplayP
     const rotation = -uavState.pitch || 0;
     
     return (
-        <div className="border-gray-400 border w-full h-1/2 print:hidden bg-neutral-900">
+        <div className="border-gray-400 border w-full print:hidden bg-neutral-900">
             <div className="relative flex w-full h-full bg-black">
                 {/* Left side - Aircraft */}
                 <div className="w-1/4 flex items-center justify-center h-auto">

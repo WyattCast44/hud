@@ -17,6 +17,8 @@ type UAVState = {
   powerMode: string;
   pla: number;
   boardsPosition: BoardsPosition;
+  latitude: number;
+  longitude: number;
 };
 
 export enum BoardsPosition {
@@ -44,6 +46,8 @@ function App() {
     powerMode: "speed",
     pla: 30,
     boardsPosition: BoardsPosition.IN,
+    latitude: 36.589243,
+    longitude: -115.671793,
   } as UAVState);
 
   const [displayPreferences, setDisplayPreferences] = useState({
@@ -58,33 +62,35 @@ function App() {
   return (
     <div className="h-screen w-screen overflow-hidden">
       <div className="flex h-full p-2 space-x-2">
-        <div className="w-2/6 print:hidden">
+        <div className="w-auto print:hidden">
           <ControlPanel
             uavState={uavState}
             displayPreferences={displayPreferences}
             onStateChange={setUavState}
           />
         </div>
-        <div className="w-4/6 print:w-full flex flex-col items-center justify-center space-y-2">
-          <HUDDisplay
-            uavState={uavState}
-            displayPreferences={displayPreferences}
-          />
-          <div className="flex w-full space-x-2 flex-1 max-h-1/2 print:hidden">
-            <HSIDisplay
+        <div className="flex-1 print:w-full flex flex-col items-center justify-center space-y-2">
+          <div className="flex w-full space-x-2 h-auto flex-1 print:space-x-0">
+            <HUDDisplay
               uavState={uavState}
               displayPreferences={displayPreferences}
             />
-            <div className="flex flex-col space-y-2 w-full">
-              <VSIDisplay
-                uavState={uavState}
-                displayPreferences={displayPreferences}
-              />
+            <div className="print:hidden flex-1">
               <MapDisplay
                 uavState={uavState}
                 displayPreferences={displayPreferences}
               />
             </div>
+          </div>
+          <div className="flex w-full space-x-2 flex-1 max-h-1/2 print:hidden">
+            <HSIDisplay
+              uavState={uavState}
+              displayPreferences={displayPreferences}
+            />
+            <VSIDisplay
+              uavState={uavState}
+              displayPreferences={displayPreferences}
+            />
           </div>
         </div>
       </div>
