@@ -1,159 +1,113 @@
 import { useEffect } from "react";
 import hotkeys from "hotkeys-js";
-import { UAVState } from "./../App";
 import BoardsPosition from "../types/BoardsPosition";
 import { normalizeHeading } from "../utils/math";
+import UAVState from '../types/UAVState';
+import SimulationControls from '../types/SimulationControls';
+import GearPosition from "../types/GearPosition";
+import PowerMode from "../types/PowerMode";
 type SetUAVState = (callback: (prev: UAVState) => UAVState) => void;
 
-export function useKeyboardShortcuts(setUavState: SetUAVState) {
+export function useKeyboardShortcuts(
+  uavState: UAVState,
+  onStateChange: (state: UAVState) => void,
+  simulationControls: SimulationControls
+) {
   useEffect(() => {
-    // Prevent shortcuts when focused on input elements
-    hotkeys.filter = (event) => {
-      return !(event.target instanceof HTMLInputElement);
-    };
+    const handleKeyDown = (e: KeyboardEvent) => {
 
-    // Define shortcuts
-    hotkeys("up", (event) => {
-      event.preventDefault();
-      setUavState((prev) => ({
-        ...prev,
-        pitch: Math.round((prev.pitch + 0.1) * 10) / 10,
-      }));
-    });
+      // if an input is focused, don't handle the keydown event
+      if (document.activeElement instanceof HTMLInputElement || document.activeElement instanceof HTMLButtonElement) {
+        return;
+      }
 
-    hotkeys("down", (event) => {
-      event.preventDefault();
-      setUavState((prev) => ({
-        ...prev,
-        pitch: Math.round((prev.pitch - 0.1) * 10) / 10,
-      }));
-    });
+      // Simulation controls
+      if (e.key === ' ') { // Spacebar
+        if (simulationControls.isRunning) {
+          simulationControls.pause();
+        } else {
+          simulationControls.start();
+        }
+        return;
+      }
+      if (e.key === 'r') {
+        simulationControls.reset();
+        return;
+      }
 
-    hotkeys("left", (event) => {
-      event.preventDefault();
-      setUavState((prev) => ({
-        ...prev,
-        bank: Math.max(prev.bank - 1, -45),
-      }));
-    });
+      // Original controls
+      const newState = { ...uavState };
+      let updated = false;
 
-    hotkeys("right", (event) => {
-      event.preventDefault();
-      setUavState((prev) => ({
-        ...prev,
-        bank: Math.min(prev.bank + 1, 45),
-      }));
-    });
-
-    hotkeys("g", () => {
-      setUavState((prev) => ({
-        ...prev,
-        gearPosition: prev.gearPosition === "up" ? "down" : "up",
-      }));
-    });
-
-    hotkeys("t", () => {
-      setUavState((prev) => ({
-        ...prev,
-        powerMode: prev.powerMode === "speed" ? "pla" : "speed",
-      }));
-    });
-
-    // p+up, p+down = pla
-    hotkeys("ctrl+up", () => {
-      setUavState((prev) => ({
-        ...prev,
-        pla: Math.min(prev.pla + 1, 100),
-      }));
-    });
-
-    hotkeys("ctrl+down", () => {
-      setUavState((prev) => ({
-        ...prev,
-        pla: Math.max(prev.pla - 1, 0),
-      }));
-    });
-
-    hotkeys("h+left", () => {
-      setUavState((prev) => ({
-        ...prev,
-        heading: normalizeHeading(prev.heading - 1),
-      }));
-    });
-
-    hotkeys("h+right", () => {
-      setUavState((prev) => ({
-        ...prev,
-        heading: normalizeHeading(prev.heading + 1),
-      }));
-    });
-
-    hotkeys("a+up", () => {
-      setUavState((prev) => ({
-        ...prev,
-        airspeed: Math.min(prev.airspeed + 1, 500),
-      }));
-    });
-
-    hotkeys("a+down", () => {
-      setUavState((prev) => ({
-        ...prev,
-        airspeed: Math.max(prev.airspeed - 1, 0),
-      }));
-    });
-
-    // z+up, z+down = altitude
-    hotkeys("z+up", () => {
-      setUavState((prev) => ({
-        ...prev,
-        altitude: Math.min(prev.altitude + 100, 100000),
-      }));
-    });
-
-    hotkeys("z+down", () => {
-      setUavState((prev) => ({
-        ...prev,
-        altitude: Math.max(prev.altitude - 100, 0),
-      }));
-    });
-
-    // ctrl+h
-    hotkeys("ctrl+h", (event) => {
-      event.preventDefault();
-
-      setUavState((prev) => ({
-        ...prev,
-        heading: normalizeHeading(360),
-        bank: 0,
-        pitch: 0,
-      }));
-    });
-
-    hotkeys("b", () => {
-      setUavState((prev) => ({
-        ...prev,
-        boardsPosition: (() => {
-          switch (prev.boardsPosition) {
-            case BoardsPosition.IN:
-              return BoardsPosition.HALF;
-            case BoardsPosition.HALF:
-              return BoardsPosition.FULL;
-            case BoardsPosition.FULL:
-              return BoardsPosition.LOCKED;
-            case BoardsPosition.LOCKED:
-              return BoardsPosition.IN;
-            default:
-              return BoardsPosition.IN;
+      switch (e.key) {
+        case 'ArrowUp':
+          if (e.ctrlKey) {
+            newState.pla = Math.min((newState.pla || 0) + 1, 100);
+          } else {
+            newState.gamma = Math.min((newState.gamma || 0) + .1, 45);
+            newState.gamma = parseFloat(newState.gamma.toFixed(2));
           }
-        })(),
-      }));
-    });
+          updated = true;
+          break;
+        case 'ArrowDown':
+          if (e.ctrlKey) {
+            newState.pla = Math.max((newState.pla || 0) - 1, 0);
+          } else {
+            newState.gamma = Math.max((newState.gamma || 0) - .1, -45);
+            newState.gamma = parseFloat(newState.gamma.toFixed(2));
+          }
+          updated = true;
+          break;
+        case 'ArrowLeft':
+          newState.bank = Math.max(newState.bank - 1, -45);
+          updated = true;
+          break;
+        case 'ArrowRight':
+          newState.bank = Math.min(newState.bank + 1, 45);
+          updated = true;
+          break;
+        case 'g':
+          newState.gearPosition = newState.gearPosition === GearPosition.UP ? GearPosition.DOWN : GearPosition.UP;
+          updated = true;
+          break;
+        case 't':
+          newState.powerMode = newState.powerMode === PowerMode.SPEED ? PowerMode.PLA : PowerMode.SPEED;
+          updated = true;
+          break;
+        case 'h':
+          newState.heading = normalizeHeading(360);
+          newState.bank = 0;
+          newState.gamma = 0;
+          updated = true;
+          break;
+        case 'b':
+          newState.boardsPosition = (() => {
+            switch (newState.boardsPosition) {
+              case BoardsPosition.IN:
+                return BoardsPosition.HALF;
+              case BoardsPosition.HALF:
+                return BoardsPosition.FULL;
+              case BoardsPosition.FULL:
+                return BoardsPosition.LOCKED;
+              case BoardsPosition.LOCKED:
+                return BoardsPosition.IN;
+              default:
+                return BoardsPosition.IN;
+            }
+          })();
+          updated = true;
+          break;
+      }
 
-    // Cleanup
-    return () => {
-      hotkeys.unbind(
-        "up,down,left,right,g,t,ctrl+up,ctrl+down,h+left,h+right,a+up,a+down,z+up,z+down,b"
-      );
+
+      // need to fix: heading, airspeed, and altitude
+
+      if (updated) {
+        onStateChange(newState);
+      }
     };
-  }, [setUavState]);
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [uavState, onStateChange, simulationControls]);
 }

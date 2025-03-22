@@ -20,6 +20,8 @@ function generateTicks(heading: number) {
     // normalize the tick heading, ensuring it's within 1-360
     tickHeading = normalizeHeading(tickHeading);
 
+    tickHeading = parseFloat(tickHeading.toFixed(0));
+
     // calculate the x position of the tick
     const x = offset * TICK_SPACING;
 
@@ -68,6 +70,9 @@ function generateTicks(heading: number) {
 }
 
 export default function HeadingIndicator({ heading }: { heading: number }) {
+
+  let currentHeadingLabel = normalizeHeading(heading).toFixed(0).toString().padStart(3, "0");
+
   return (
     <div className="absolute left-1/2 -translate-x-1/2 text-green-500 print:text-black top-[3%] z-10">
       <svg
@@ -106,7 +111,7 @@ export default function HeadingIndicator({ heading }: { heading: number }) {
           fontSize="14"
           className="font-mono"
         >
-          {normalizeHeading(heading).toString().padStart(3, "0")}
+          {currentHeadingLabel}
         </text>
       </svg>
     </div>

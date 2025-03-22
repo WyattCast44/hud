@@ -42,7 +42,7 @@ const controls: InputControl[] = [
     shortcut: "z+up/down",
   },
   {
-    name: "airspeed",
+    name: "keas",
     label: "Airspeed",
     unit: "KEAS",
     defaultValue: 150,
@@ -74,7 +74,7 @@ const controls: InputControl[] = [
     shortcut: "h+left/right",
   },
   {
-    name: "pitch",
+    name: "gamma",
     label: "Gamma",
     unit: "deg",
     defaultValue: 0,
@@ -82,9 +82,11 @@ const controls: InputControl[] = [
     max: 45,
     step: 0.1,
     validate: function (value: number | string): number | string {
-      const num = Number(value);
+      let num = Number(value);
 
-      return Math.min(Math.max(num, -45), 45);
+      num = Math.min(Math.max(num, -45), 45);
+
+      return parseFloat(num.toFixed(2));
     },
     type: "number",
     shortcut: "up/down",

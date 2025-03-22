@@ -38,17 +38,17 @@ export default function MapDisplay({
         }),
       ],
       view: new View({
-        center: [uavState.longitude, uavState.latitude],
+        center: [uavState.longitude || 0, uavState.latitude || 0],
         zoom: 14,
       }),
       controls: [],
     });
 
-    let posit = fromLonLat([uavState.longitude, uavState.latitude]);
+    let position = fromLonLat([uavState.longitude || 0, uavState.latitude || 0]);
 
     // plane marker
     const marker = new Overlay({
-      position: [uavState.longitude, uavState.latitude],
+      position: [uavState.longitude || 0, uavState.latitude || 0],
       positioning: "center-center",
       element: markerRef.current as HTMLElement,
       stopEvent: false,
@@ -59,7 +59,7 @@ export default function MapDisplay({
     return () => {
       map.setTarget(null as unknown as HTMLElement);
     };
-  }, []);
+  }, [uavState]);
 
   return (
     <div className="flex-1 relative w-full h-full">

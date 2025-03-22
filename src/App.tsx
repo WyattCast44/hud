@@ -9,6 +9,7 @@ import UAVState from "./types/UAVState";
 import GearPosition from "./types/GearPosition";
 import PowerMode from "./types/PowerMode";
 import BoardsPosition from "./types/BoardsPosition";
+import { useKeyboardShortcuts } from "./hooks/useKeyboardShortcuts";
 
 function App() {
   const initialUAVState: UAVState = {
@@ -28,7 +29,7 @@ function App() {
     commandedBoardsPosition: null,
     gearPosition: GearPosition.UP,
     commandedGearPosition: null,
-    pla: 0,
+    pla: 30,
     powerMode: PowerMode.SPEED,
     commandedSpeed: null,
     commandedPLA: null,
@@ -36,7 +37,15 @@ function App() {
     latitude: 36.589243,
   };
 
-  const [uavState, simulationControls] = useUAVSimulation(initialUAVState);
+  const [uavState, setUAVState, simulationControls] = useUAVSimulation(initialUAVState);
+
+  useKeyboardShortcuts(
+    uavState,
+    (newState) => {
+      setUAVState(newState);
+    },
+    simulationControls
+  );
 
   return (
     <div className="h-screen w-screen overflow-hidden">
@@ -45,7 +54,7 @@ function App() {
         <div className="w-1/4 print:hidden">
           <ControlPanel
             uavState={uavState}
-            onStateChange={simulationControls.reset}
+            onStateChange={setUAVState}
             simulationControls={simulationControls}
           />
         </div>

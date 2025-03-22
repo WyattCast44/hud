@@ -51,7 +51,8 @@ function generateTicks(bank: number) {
 }
 
 function bankPointer(bank: number) {
-   const angle = 90 + bank;
+   const angle = 90 + Number(bank);
+
    // Get the tip point
    const tipPoint = polarToCartesian(
        BANK_INDICATOR_CENTER_X, 

@@ -9,7 +9,7 @@ export default function CommandedPitchIndicator({
   bank: number;
   width: number;
 }) {
-  let label = gamma.toFixed(1);
+  let label = Number(gamma).toFixed(1);
 
   if (gamma >= 0) {
     label = "+" + label;

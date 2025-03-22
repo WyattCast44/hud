@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, Dispatch, SetStateAction } from "react";
 import UAVState from "../types/UAVState";
 import SimulationControls from "../types/SimulationControls";
 
@@ -7,7 +7,7 @@ const TIME_STEP = 1 / SIMULATION_RATE; // seconds
 
 export function useUAVSimulation(
   initialState: UAVState
-): [UAVState, SimulationControls] {
+): [UAVState, Dispatch<SetStateAction<UAVState>>, SimulationControls] {
   const [state, setState] = useState<UAVState>(initialState);
   const [isRunning, setIsRunning] = useState(false);
   const [lastUpdate, setLastUpdate] = useState<number>(0);
@@ -43,6 +43,7 @@ export function useUAVSimulation(
 
               newState.latitude += latChange * (180 / Math.PI);
               newState.longitude += lonChange * (180 / Math.PI);
+              console.log(newState.latitude, newState.longitude);
             }
           }
 
@@ -91,5 +92,5 @@ export function useUAVSimulation(
     setIsRunning(false);
   }, [initialState]);
 
-  return [state, { isRunning, start, stop, pause, reset }];
+  return [state, setState, { isRunning, start, stop, pause, reset }];
 }
