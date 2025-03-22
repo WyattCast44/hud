@@ -1,5 +1,5 @@
 import React from "react";
-import { BoardsPosition } from "../../App";
+import BoardsPosition from "../../types/BoardsPosition";
 
 export default function ControlBoards({
     position, 

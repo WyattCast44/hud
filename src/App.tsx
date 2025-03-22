@@ -6,6 +6,10 @@ import HSIDisplay from "./components/layout/HSIDisplay";
 import VSIDisplay from "./components/layout/VSIDisplay";
 import MapDisplay from "./components/layout/MapDisplay";
 import { useKeyboardShortcuts } from "./hooks/useKeyboardShortcuts";
+import UAVState2 from "./types/UAVState";
+import GearPosition from "./types/GearPosition";
+import PowerMode from "./types/PowerMode";
+import BoardsPosition from "./types/BoardsPosition";
 
 type UAVState = {
   airspeed: number;
@@ -20,13 +24,6 @@ type UAVState = {
   latitude: number;
   longitude: number;
 };
-
-export enum BoardsPosition {
-  LOCKED = "locked",
-  IN = "in",
-  HALF = "half",
-  FULL = "full",
-}
 
 type DisplayPreferences = {
   showHUD: boolean;
@@ -49,6 +46,23 @@ function App() {
     latitude: 36.589243,
     longitude: -115.671793,
   } as UAVState);
+
+  const [uavState2, setUavState2] = useState({
+    keas: 130,
+    altitude: 16000,
+    heading: 360,
+    gamma: 0,
+    bank: 0,
+    commandedBank: 0,
+    course: 360,
+    boardsPosition: BoardsPosition.IN,
+    gearPosition: GearPosition.UP,
+    powerMode: PowerMode.SPEED,
+    longitude: -115.671793,
+    latitude: 36.589243,    
+  } as UAVState2);
+
+  console.log(uavState2);
 
   const [displayPreferences, setDisplayPreferences] = useState({
     showHUD: true,

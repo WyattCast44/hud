@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import hotkeys from "hotkeys-js";
-import { BoardsPosition, UAVState } from "./../App";
+import { UAVState } from "./../App";
+import BoardsPosition from "../types/BoardsPosition";
 import { normalizeHeading } from "../utils/math";
 type SetUAVState = (callback: (prev: UAVState) => UAVState) => void;
 
